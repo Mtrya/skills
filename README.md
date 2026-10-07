@@ -35,6 +35,7 @@ Personal collection of agent skills for kimi-code and Codex. This repo is the so
 ### `tools/` — general-purpose utilities
 
 - [archify](tools/archify/SKILL.md) — Create architecture, workflow, sequence, data-flow, and lifecycle diagrams as standalone HTML with SVG; accepts plain language or Mermaid.
+- [distill-agent-rule](tools/distill-agent-rule/SKILL.md) — Turn one user complaint about agent behavior into a durable, general rule: interrogate the evidence, formulate the class with its temptation, place it in AGENTS.md, a skill, or a gate.
 - [grill-me](tools/grill-me/SKILL.md) — Interview the user relentlessly about a plan or design until reaching shared understanding.
 - [hf-cli](tools/hf-cli/SKILL.md) — Hugging Face Hub CLI (`hf`) for downloading, uploading, and managing models, datasets, spaces, jobs, papers, and more.
 - [mineru](tools/mineru/SKILL.md) — MinerU document parsing API — convert PDF/DOC/PPT/images to Markdown/JSON with OCR, formula recognition, and table extraction.
