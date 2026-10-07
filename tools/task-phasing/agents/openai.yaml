@@ -1,0 +1,4 @@
+interface:
+  display_name: "Task Phasing"
+  short_description: "Turn big tasks into evidence-backed phased roadmaps."
+  default_prompt: "Use $task-phasing to break this work into actionable phases with a top-level roadmap, source-of-truth mapping, and one detailed child roadmap per phase."
