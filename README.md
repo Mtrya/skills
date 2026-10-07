@@ -38,7 +38,6 @@ Personal collection of agent skills for kimi-code and Codex. This repo is the so
 - [grill-me](tools/grill-me/SKILL.md) — Interview the user relentlessly about a plan or design until reaching shared understanding.
 - [hf-cli](tools/hf-cli/SKILL.md) — Hugging Face Hub CLI (`hf`) for downloading, uploading, and managing models, datasets, spaces, jobs, papers, and more.
 - [mineru](tools/mineru/SKILL.md) — MinerU document parsing API — convert PDF/DOC/PPT/images to Markdown/JSON with OCR, formula recognition, and table extraction.
-- [orchestration](tools/orchestration/SKILL.md) — Orca orchestration for structured multi-agent coordination: threaded messages, blocking ask/reply flows, task DAGs, decision gates.
 - [task-phasing](tools/task-phasing/SKILL.md) — Decompose a large task into an evidence-backed phased roadmap with dependencies, exit criteria, and follow-up prompts.
 - [write-a-skill](tools/write-a-skill/SKILL.md) — Create new agent skills with proper structure, progressive disclosure, and bundled resources.
 
