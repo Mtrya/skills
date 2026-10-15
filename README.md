@@ -24,7 +24,7 @@ Personal collection of agent skills for kimi-code and Codex. This repo is the so
 
 ### `research/` — academic writing & research workflow
 
-- [benchmark-paper-template](research/benchmark-paper-template/SKILL.md) — Structures benchmark/evaluation papers using the five-pillar framework; returns a completeness audit, Introduction logic chain, skeleton, and checklist.
+- [experiment-lifecycle](research/experiment-lifecycle/SKILL.md) — Plan and analyze experiments around named questions and decisions, using justified priors and purpose-driven designs.
 - [figure-designer](research/figure-designer/SKILL.md) — Advises on the three core figures of a technical paper (Motivated Example, Solution Overview, Experimental Results), then runs a quality-control audit.
 - [idea-evaluator](research/idea-evaluator/SKILL.md) — Evaluates a preliminary research idea against a five-dimension framework (Higher, Faster, Stronger, Cheaper, Broader) plus a fatal-flaws audit.
 - [intro-drafter](research/intro-drafter/SKILL.md) — Drafts a 6-paragraph Introduction outline for a technical paper from a structured flowchart, aligning contributions with challenges.
@@ -39,7 +39,11 @@ Personal collection of agent skills for kimi-code and Codex. This repo is the so
 - [grill-me](tools/grill-me/SKILL.md) — Interview the user relentlessly about a plan or design until reaching shared understanding.
 - [hf-cli](tools/hf-cli/SKILL.md) — Hugging Face Hub CLI (`hf`) for downloading, uploading, and managing models, datasets, spaces, jobs, papers, and more.
 - [mineru](tools/mineru/SKILL.md) — MinerU document parsing API — convert PDF/DOC/PPT/images to Markdown/JSON with OCR, formula recognition, and table extraction.
+- [repo-hygiene](tools/repo-hygiene/SKILL.md) — Audience-first doctrine for repository structure and prose, requiring real consumers and useful information.
+- [report-writing](tools/report-writing/SKILL.md) — Write analytical reports from available evidence, with targeted research, adaptive presentation, source links, and the requested output format.
 - [task-phasing](tools/task-phasing/SKILL.md) — Decompose a large task into an evidence-backed phased roadmap with dependencies, exit criteria, and follow-up prompts.
+- [visual-design](tools/visual-design/SKILL.md) — Create presentations and visual assets with separate design workflows, shared editable `.pptd` sources, and validated PPTX export.
+- [work-report-writer](tools/work-report-writer/SKILL.md) — Turn work notes and Git history into weekly or monthly reports, with data-oriented, narrative, or OKR-aligned styles.
 - [write-a-skill](tools/write-a-skill/SKILL.md) — Create new agent skills with proper structure, progressive disclosure, and bundled resources.
 
 ## Provenance

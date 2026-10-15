@@ -5,7 +5,7 @@
 1. Incremental versus disruptive
 2. The four probing principles
 3. Scoring the probe
-4. When to delegate to handbook 2.3
+4. When to deepen the disruptive framing
 5. Risk and reward trade-off
 6. Portfolio strategy for a PhD
 
@@ -97,14 +97,15 @@ as 2, Partial as 1, No as 0. Total score 0-8.
   emphasise Higher or Faster.
 - **3-4**: incremental with disruptive seeds. Explicitly call out the
   disruptive aspect in the Introduction to capture reader attention.
-- **5-6**: disruptive potential. Consider reading handbook 2.3 to
-  deepen the framing.
-- **7-8**: genuine paradigm-shift candidate. Definitely study handbook
-  2.3; the Introduction should lead with First Principles framing.
+- **5-6**: disruptive potential. Deepen the framing against
+  `paradigm-examples.md` before writing.
+- **7-8**: genuine paradigm-shift candidate. Study
+  `paradigm-examples.md`; the Introduction should lead with First
+  Principles framing.
 
-## 4. When to delegate to handbook 2.3
+## 4. When to deepen the disruptive framing
 
-Recommend the user read handbook 2.3 when:
+Work through `paradigm-examples.md` with the user when:
 
 - Probe score is 5 or higher.
 - Probe score is lower but the user explicitly wants to pursue a

@@ -11,10 +11,9 @@
 ## 1. How to read these examples
 
 Each example below is a retrospective filling of the thinking
-template for a published paper. Ratings reflect what a strong
-pre-submission filling looks like. Sources are
-`handbook/06_Case_Studies/6.1`, `6.2`, and
-`6.3`.
+template for a published paper (Alpha-SQL, ICML 2025; AFlow,
+ICLR 2025; LEAD, VLDB 2026). Ratings reflect what a strong
+pre-submission filling looks like.
 
 ## 2. Example A: Alpha-SQL, Technique
 

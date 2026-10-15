@@ -47,8 +47,7 @@ to deliver it.
 ## When NOT to use this skill
 
 - The paper's core idea is not yet stable. Use `idea-evaluator` first.
-- The paper is a benchmark paper. Use `benchmark-paper-template` (separate plugin)
-  instead; the flowchart differs.
+- The paper is a benchmark paper. Handle its Introduction directly; this technical-paper flowchart does not apply.
 - The user wants to polish Introduction prose that is already
   structured. Use `pre-submission-reviewer` instead.
 - The user wants to evaluate whether the Introduction is ready for
@@ -152,8 +151,9 @@ section below.
 
 ### Step 7: Output the outline
 
-Emit the outline in the Output format below. For `interactive` mode,
-do not emit; converse one paragraph at a time.
+Emit the outline in the Output format below. If the user wants to
+work interactively, do not emit the full outline; converse one
+paragraph at a time instead.
 
 ## Integrity gate
 

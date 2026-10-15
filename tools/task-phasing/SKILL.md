@@ -79,6 +79,7 @@ A good phase should:
 - have a concrete write scope or artifact scope
 - avoid mixing unrelated concerns
 - leave the system in a coherent state even if later phases never happen
+- declare dependencies on prior phases, and flag phases that are mutually independent so they can run in parallel sessions or worktrees
 
 Split phases when one part can be completed and validated without the other. Merge phases when separation would create artificial overhead.
 
@@ -93,7 +94,7 @@ Each child roadmap should include:
 - `Implementation Notes`: constraints, algorithms, edge cases, and sequencing details
 - `Validation`: focused tests, smoke commands, fixture expectations, manual checks, or metrics
 - `Exit Criteria`: observable completion conditions, not intentions
-- `Suggested Prompt`: a ready-to-use prompt for starting that phase later
+- `Suggested Prompt`: a ready-to-use prompt for starting that phase later, wrapped in a fenced code block so it can be copied verbatim
 
 For code projects, include likely file paths or module names when knowable. For research-to-implementation work, include paper-to-project adaptation notes and what is intentionally omitted.
 
@@ -217,4 +218,4 @@ Name files predictably when writing them to disk, for example:
 - `PHASE_1_<NAME>.md`
 - `PHASE_2_<NAME>.md`
 
-If the project uses a local internal-doc convention, follow that convention instead of inventing a new one.
+If the repo already has an established directory for internal working docs, write there and follow its naming convention. Otherwise create a `roadmap/` directory at the repo root with a `roadmap/.gitignore` that keeps its contents untracked — these are working documents for the sessions executing them, not part of the repo's public surface.
