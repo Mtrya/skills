@@ -17,10 +17,6 @@ ground the scoring rubric and the paradigm-shift probe in concrete
 work. They are not predictions; the papers are already published and
 accepted at their venues.
 
-Sources: `handbook/06_Case_Studies/6.1_ICML_2025_Alpha-SQL*.md`,
-`handbook/06_Case_Studies/6.2_ICLR_2025_AFlow*.md`,
-`handbook/06_Case_Studies/6.3_VLDB_2026_LEAD*.md`.
-
 ## 2. Example A: Alpha-SQL (ICML 2025), incremental, Strong Accept
 
 ### Input (as if submitted for evaluation)
@@ -115,9 +111,9 @@ search-based view of agent workflows has not appeared in ICLR before.
 | Technology Cycle | Yes | LLMs make operator-graph search meaningful |
 | Hamming's Rule | Partial | Important for agent research |
 
-Probe score: 5. Disruptive seeds present. Recommend reading handbook
-2.3 for deepening the framing around "workflow as a first-class
-object".
+Probe score: 5. Disruptive seeds present. Deepen the framing around
+"workflow as a first-class object" against the canonical examples
+before writing.
 
 **5. Feasibility.** Green.
 
@@ -175,8 +171,8 @@ as the contribution, and provides the method.
 | Technology Cycle | Partial | Instruction tuning only recently became a bottleneck |
 | Hamming's Rule | Partial | Important to scale efficiency |
 
-Probe score: 5. Disruptive seeds. Recommend reading handbook 2.3 for
-deepening the First Principles framing.
+Probe score: 5. Disruptive seeds. Deepen the First Principles framing
+against the canonical examples before writing.
 
 **5. Feasibility.** Yellow on timeline; six months is aggressive for
 a Data-intensive paper. Mitigation: preregister the main claim and

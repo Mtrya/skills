@@ -43,8 +43,7 @@ should block submission until addressed.
 
 ## When NOT to use this skill
 
-- The paper is still being structured. Use `tech-paper-template`,
-  `intro-drafter`, or `benchmark-paper-template` (separate plugin) first.
+- The paper is still being structured. Use `tech-paper-template` or `intro-drafter` for technical papers; handle benchmark-paper planning directly.
 - The user wants structural advice rather than review. Use the
   drafting skills instead.
 
@@ -197,7 +196,7 @@ Before emitting the review:
    nothing is marked CRITICAL for taste reasons.
 5. **[inspection]** Dimension 3 (grammar) findings cite the
    specific grammar rule from `references/grammar-rules.md`.
-6. **[attestation]** Dimension 6 banned-vocabulary scan is run in
+6. **[attestation]** The banned-vocabulary scan (Step 6) is run in
    full on the entire paper, not sampled. The skill attests the
    full scan; if the paper is extremely long, the skill states it
    chunked the input and describes the chunking strategy.

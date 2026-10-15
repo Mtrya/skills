@@ -44,7 +44,7 @@ that); it operates at the logical-skeleton layer.
 
 ## When NOT to use this skill
 
-- The paper is a benchmark paper. Use `benchmark-paper-template` (separate plugin).
+- The paper is a benchmark paper. Handle its structure directly; this technical-paper template does not apply.
 - The user needs an Introduction-specific paragraph outline. Use
   `intro-drafter` (typically run this skill first, then
   `intro-drafter`).
@@ -64,8 +64,7 @@ Idea carries the narrative and Our Goal is a short bridge. In New
 Problem/Setting, Our Goal is the contribution and the Key Idea
 justifies feasibility.
 
-If the user's inputs describe a benchmark, stop and redirect to
-`benchmark-paper-template` (separate plugin).
+If the user's inputs describe a benchmark, handle its structure directly rather than applying this technical-paper template.
 
 ### Step 2: Fill the thinking template
 
@@ -78,8 +77,9 @@ Fill the seven cells:
 2. Limitations 1 through 3 (2 is acceptable; more than 3 is not).
 3. Key idea or Our Goal. One sentence.
 4. Challenges 1 through 3 (similar cap).
-5. Methodology modules. One module per challenge.
-6. Contributions (3 or 4, each mapped to a section).
+5. Methodology topic sentence. One sentence.
+6. Methodology modules. One module per challenge.
+7. Contributions (3 or 4, each mapped to a section).
 
 If a cell is incomplete given the user's inputs, mark it as a gap
 with severity.

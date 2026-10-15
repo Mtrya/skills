@@ -59,8 +59,8 @@ request does not match any, either it is a supporting figure (use
 the experimental-results guidance as a base) or it does not belong
 in the paper.
 
-If the mode is `figure-audit` and the user has provided an image
-path, load the image with the Read tool **before** proceeding to
+If the user has provided an image of an existing figure to audit,
+load the image with the Read tool **before** proceeding to
 Step 2. Vision-based inspection enables the universal rule audit
 in Step 6 to check font legibility, colour palette, raster-vs-
 vector tells, and chartjunk directly rather than relying on user

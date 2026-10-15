@@ -42,16 +42,12 @@ writing begins.
 
 ## When NOT to use this skill
 
-- The user has already implemented the idea and is writing the paper.
-  Use `intro-drafter`, `tech-paper-template`, or
-  `benchmark-paper-template` (separate plugin) instead.
+- The user has already implemented the idea and is writing the paper. Use `intro-drafter` or `tech-paper-template` for technical papers; handle benchmark-paper planning directly.
 - The user explicitly wants brainstorming of new ideas from scratch.
-  Use plain conversation; see handbook 2.3 for a disruptive-innovation
-  playbook.
+  Use plain conversation.
 - The user asks for review of an existing manuscript. Use
   `pre-submission-reviewer`.
-- The user asks to evaluate a benchmark contribution specifically.
-  Use `benchmark-paper-template` (separate plugin) in targeted mode.
+- The user asks to evaluate a benchmark contribution specifically. Assess its evaluation gap, construction quality, and evidence directly rather than applying this method-oriented framework.
 
 ## Core procedure
 
@@ -120,8 +116,7 @@ has the highest ceiling and recommend emphasising those in the paper.
 
 See: references/paradigm-shift-probe.md for the four probing principles
 (First Principles, Elephant in the Room, Technology Cycle, Hamming's
-Rule) and the cross-reference to handbook section 2.3 when deeper
-disruptive-innovation exploration is needed.
+Rule), probe scoring, and risk trade-off guidance.
 
 Test the idea against four questions:
 
@@ -134,8 +129,8 @@ Test the idea against four questions:
    (Hamming's Rule)
 
 Two or more yes answers means the idea has disruptive potential. Note
-that, and recommend reading handbook 2.3 to deepen the thinking on
-disruptive-innovation dimensions.
+that, and deepen the framing against references/paradigm-examples.md
+before the user starts writing.
 
 ### Step 6: Feasibility check
 

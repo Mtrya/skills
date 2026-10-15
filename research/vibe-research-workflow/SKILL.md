@@ -33,9 +33,7 @@ academic misconduct (fabricated citations, outsourced scientific
 judgment, hidden AI authorship).
 
 This skill is a meta-skill that orchestrates tool selection, flow
-design, and integrity enforcement across a research session. It
-consolidates the the curriculum's Vibe Research section into a
-single invocable procedure.
+design, and integrity enforcement across a research session.
 
 ## When to use this skill
 
@@ -59,7 +57,7 @@ single invocable procedure.
 - The user wants a code implementation done. This skill guides
   the process; it does not replace the implementation itself.
 - The user wants to evaluate research direction. Use
-  `idea-evaluator` (see handbook 2.3 for disruptive-innovation deep-dive).
+  `idea-evaluator`.
 
 ## Core procedure
 
