@@ -25,8 +25,7 @@ the first planning decision.
   Key Idea carries the narrative but the Broader dimension from the
   `idea-evaluator` framework is emphasised in the Introduction.
 
-Benchmark papers are a separate category; use
-`benchmark-paper-template` (separate plugin).
+Benchmark papers are a separate category; handle their structure directly rather than applying this technical-paper template.
 
 ## 2. Technique Paper
 
@@ -98,8 +97,7 @@ neural architecture search) into agent-workflow design.
 
 Ask the following in order. First yes decides:
 
-1. Is the paper's primary contribution a benchmark? If yes, stop
-   and redirect to `benchmark-paper-template` (separate plugin).
+1. Is the paper's primary contribution a benchmark? If yes, handle its structure directly rather than applying this technical-paper template.
 2. Is the paper's primary contribution a new problem formulation
    that the community has not studied? If yes, New Problem/Setting.
 3. Is the paper's primary contribution a technique transplanted
