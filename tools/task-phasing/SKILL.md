@@ -83,7 +83,17 @@ A good phase should:
 
 Split phases when one part can be completed and validated without the other. Merge phases when separation would create artificial overhead.
 
-### 5. Make each child phase a working dossier
+### 5. Verify the phases partition the task
+
+The phase set must be MECE — mutually exclusive (no overlap) and collectively exhaustive (no gaps) — relative to the full task scope.
+
+- Derive the complete list of work areas or items from the contract and the evidence inventory.
+- Assign each item to exactly one phase, and record that mapping in the orchestrating roadmap's `Scope Map`.
+- Check the union covers the whole task: anything no phase owns is a gap — give it a phase or declare it an explicit non-goal.
+- Check no item is claimed by two phases: resolve overlaps explicitly by splitting, merging, or assigning the shared concern to one phase and declaring a dependency from the other.
+- When two phases must touch the same files or behaviors, state the boundary in both phase docs.
+
+### 6. Make each child phase a working dossier
 
 Each child roadmap should include:
 
@@ -98,7 +108,7 @@ Each child roadmap should include:
 
 For code projects, include likely file paths or module names when knowable. For research-to-implementation work, include paper-to-project adaptation notes and what is intentionally omitted.
 
-### 6. Preserve validation as part of design
+### 7. Preserve validation as part of design
 
 Do not create "testing later" plans unless the task genuinely cannot be tested earlier. Each phase should say what can be validated at that point:
 
@@ -111,7 +121,7 @@ Do not create "testing later" plans unless the task genuinely cannot be tested e
 
 If validation depends on external systems, expensive runs, or unavailable data, say how to do a cheap local proxy and what remains for later.
 
-### 7. Design for fresh-session handoff
+### 8. Design for fresh-session handoff
 
 Every child roadmap should let a new session start cleanly.
 
@@ -142,6 +152,8 @@ Use this structure unless the repository already has a stronger convention:
 
 ## Contract And Boundaries
 
+## Scope Map
+
 ## Phase Order
 
 ## Cross-Phase Risks
@@ -149,7 +161,7 @@ Use this structure unless the repository already has a stronger convention:
 ## Overall Exit Criteria
 ```
 
-Keep `Current State` and `Contract And Boundaries` factual. Do not turn them into implementation wishlists.
+Keep `Current State` and `Contract And Boundaries` factual. Do not turn them into implementation wishlists. The `Scope Map` lists every work area or item from the contract and the phase that owns it; each item must appear exactly once, so coverage and overlap are auditable at a glance.
 
 ## Phase Doc Template
 
@@ -181,6 +193,8 @@ For small efforts, compress sections but preserve the same information.
 
 Before finalizing, check:
 
+- Are the phases mutually exclusive and collectively exhaustive — does every work item from the contract appear in exactly one phase, with no item claimed by two?
+- Where two phases touch the same files or behaviors, is the boundary stated explicitly in both phase docs?
 - Does every phase cite or point to the evidence it relies on?
 - Does every phase have enough detail for implementation without fresh guesswork?
 - Are source-of-truth contracts and forbidden dependencies explicit?
