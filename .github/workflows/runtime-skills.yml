@@ -1,0 +1,56 @@
+name: Runtime skills
+
+on:
+  pull_request:
+    paths:
+      - runtime-skills.json
+      - update-runtimes.sh
+      - scripts/runtime_skills.py
+      - link.sh
+      - tests/**
+      - .github/workflows/runtime-skills.yml
+  push:
+    branches: [main]
+    paths:
+      - runtime-skills.json
+      - update-runtimes.sh
+      - scripts/runtime_skills.py
+      - link.sh
+      - tests/**
+      - .github/workflows/runtime-skills.yml
+  schedule:
+    - cron: '23 4 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        runtime: [lark, hf, hyperframes]
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      DO_NOT_TRACK: '1'
+      HF_ENDPOINT: https://huggingface.co
+      SHELL: /bin/bash
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - uses: astral-sh/setup-uv@v10
+        if: matrix.runtime == 'hf'
+        with:
+          enable-cache: false
+      - name: Check linker and shell syntax
+        run: |
+          bash -n link.sh update-runtimes.sh
+          python3 -m unittest discover -s tests -v
+      - name: Install and update against current upstream releases
+        run: python3 tests/runtime_integration.py '${{ matrix.runtime }}'

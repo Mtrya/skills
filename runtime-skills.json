@@ -1,0 +1,31 @@
+{
+  "lark": [
+    "lark-approval",
+    "lark-apps",
+    "lark-base",
+    "lark-calendar",
+    "lark-doc",
+    "lark-drive",
+    "lark-event",
+    "lark-im",
+    "lark-markdown",
+    "lark-meeting",
+    "lark-openapi-explorer",
+    "lark-shared",
+    "lark-slides",
+    "lark-task",
+    "lark-wiki"
+  ],
+  "hf": [
+    "hf-cli",
+    "huggingface-datasets",
+    "huggingface-spaces",
+    "huggingface-gradio"
+  ],
+  "hyperframes": [
+    "hyperframes",
+    "hyperframes-cli",
+    "hyperframes-registry",
+    "media-use"
+  ]
+}

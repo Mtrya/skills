@@ -31,17 +31,23 @@ Personal collection of agent skills for kimi-code and Codex. Skills maintained h
 
 ## External runtimes
 
-Run `./update-runtimes.sh all`, or select `lark`, `hf`, or `hyperframes`. Each invocation installs or updates the selected runtime and its companion skills globally. Requires Bash and Git; Lark and HyperFrames also require Node.js/npm, and HF requires [uv](https://docs.astral.sh/uv/getting-started/installation/). Put the npm global bin directory and `uv tool dir --bin` on your `PATH`.
+Run `./update-runtimes.sh all`, or select `lark`, `hf`, or `hyperframes`. The script updates to the latest released runtime, invokes its skill installer, and retains exactly the names in [runtime-skills.json](runtime-skills.json) in `~/.agents/skills`. Upstream skill contents stay unchanged. Unselected skills and agent-specific copies are removed using the upstream `skills` CLI; unrelated skills are preserved.
 
-| Tool | Runtime installation/update | Skill management |
+Requires Python 3.10+, Bash, Git and Node.js 22.20+ with npm/npx. HF also requires [uv](https://docs.astral.sh/uv/getting-started/installation/). Put the npm global bin directory and `uv tool dir --bin` on your `PATH`.
+
+| Tool | Runtime installation/update | Skill installation |
 | --- | --- | --- |
-| [Lark CLI](https://github.com/larksuite/cli) | Official npm installer on first use; `lark-cli update --force` thereafter | Upstream installs and refreshes the official skill set |
-| [Hugging Face CLI](https://huggingface.co/docs/huggingface_hub/guides/cli) | `uv tool install --upgrade huggingface_hub` | `hf skills add hf-cli --global --force` generates skills for the installed CLI |
-| [HyperFrames](https://github.com/heygen-com/hyperframes) | `npm install --global hyperframes@latest` | `hyperframes skills update` installs the current core set and refreshes previously installed skills |
+| [Lark CLI](https://github.com/larksuite/cli) | Official npm installer on first use; `lark-cli update --force` thereafter | The runtime refreshes its official skill set |
+| [Hugging Face CLI](https://huggingface.co/docs/huggingface_hub/guides/cli) | `uv tool install --upgrade huggingface_hub` | `hf skills add <name> --dest ~/.agents/skills --force` |
+| [HyperFrames](https://github.com/heygen-com/hyperframes) | `npm install --global hyperframes@latest` | `hyperframes skills` installs the published set before filtering |
 
-The script detaches old Lark/HF symlinks pointing into this repository before installing upstream skills. Account setup and login remain separate. HyperFrames uses the standalone installation; plugin installations should be updated through their plugin manager. Existing video projects retain their own runtime dependencies.
+Update companion skills through this script. If a task needs an excluded skill, add it to the manifest in a subsequent update. Review companion-skill requirements manually when changing selections. Use `./update-runtimes.sh all --check` to check the installed selections without updating.
 
-Keep custom research and presentation guidance in the skills maintained here; changes to runtime companion skills belong upstream.
+HyperFrames setup configures `HYPERFRAMES_SKIP_SKILLS=1` for new Bash, Zsh or Fish sessions to disable automatic additions during normal use. Restart the shell or agent session after setup; for the current shell, run `export HYPERFRAMES_SKIP_SKILLS=1` (Fish: `set -gx HYPERFRAMES_SKIP_SKILLS 1`). The updater explicitly enables skill installation for its own refresh. Other runtime skill-management commands should not be used directly, since they bypass the allowlist.
+
+Unselected skills may briefly exist during an update. Account setup and login remain separate. HyperFrames uses the standalone installation; plugin installations should be managed through their plugin manager. Existing video projects retain their own runtime dependencies.
+
+[Runtime skills CI](.github/workflows/runtime-skills.yml) tests real fresh installations and repeated updates on relevant PRs and pushes to `main`, every Monday, and on manual dispatch. It checks selected names, final installation locations, preservation of unrelated skills, and HyperFrames' automatic-install opt-out. No accounts, training runs, or video renders are required.
 
 ## Provenance
 
