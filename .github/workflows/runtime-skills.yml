@@ -44,7 +44,7 @@ jobs:
         with:
           node-version: '24'
           package-manager-cache: false
-      - uses: astral-sh/setup-uv@v10
+      - uses: astral-sh/setup-uv@v10.3.2
         if: matrix.runtime == 'hf'
         with:
           enable-cache: false
