@@ -30,6 +30,9 @@ def main():
     canonical.mkdir(parents=True, exist_ok=True)
     if list(canonical.iterdir()):
         raise RuntimeError("Run this integration test on a disposable account with no installed skills.")
+    if args.runtime == "hyperframes":
+        # Exercise Bash's login-file precedence even on minimal container images.
+        (home / ".bash_profile").touch(exist_ok=True)
 
     # Make upstream exercise copying and mirroring, not just a pristine home.
     other_roots = [home / ".claude/skills", home / ".cursor/skills", home / ".config/opencode/skills"]

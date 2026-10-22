@@ -138,7 +138,13 @@ def enable_managed_skills(home):
         path.write_text("# Companion skills are managed by update-runtimes.sh.\nset -gx HYPERFRAMES_SKIP_SKILLS 1\n")
     else:
         line = "export HYPERFRAMES_SKIP_SKILLS=1 # Companion skills are managed by update-runtimes.sh."
-        paths = [Path(os.environ.get("ZDOTDIR", home)) / ".zshenv"] if shell == "zsh" else [home / ".profile", home / ".bashrc"]
+        if shell == "zsh":
+            paths = [Path(os.environ.get("ZDOTDIR", home)) / ".zshenv"]
+        else:
+            # Bash reads only the first existing login file in this order.
+            login_files = [home / name for name in (".bash_profile", ".bash_login", ".profile")]
+            login_file = next((path for path in login_files if path.exists()), home / ".profile")
+            paths = [login_file, home / ".bashrc"]
         for path in paths:
             text = path.read_text() if path.exists() else ""
             if line not in text.splitlines():
