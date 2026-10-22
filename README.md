@@ -1,26 +1,8 @@
 # Skills
 
-Personal collection of agent skills for kimi-code and Codex. This repo is the source of truth; the harnesses see them as symlinks in `~/.agents/skills`, created by running `./link.sh`.
+Personal collection of agent skills for kimi-code and Codex. Skills maintained here are linked into `~/.agents/skills` by `./link.sh`. Runtime companion skills are installed and updated by their upstream tools.
 
 ## Index
-
-### `lark/` — 飞书/Lark via lark-cli
-
-- [lark-approval](lark/lark-approval/SKILL.md) — 飞书审批：查询和处理审批待办/已办/实例，搜索可发起审批定义并发起原生审批实例。
-- [lark-apps](lark/lark-apps/SKILL.md) — 妙搭（Spark/Miaoda）应用开发与托管：应用创建、本地全栈开发、云端生成迭代、创意设计。
-- [lark-base](lark/lark-base/SKILL.md) — 飞书多维表格（Base）操作：建表、字段、记录、视图、统计、公式/lookup、表单、仪表盘。
-- [lark-calendar](lark/lark-calendar/SKILL.md) — 飞书日历：管理日历日程和会议室。查看/搜索日程、创建/更新日程、查询忙闲、预定会议室。
-- [lark-doc](lark/lark-doc/SKILL.md) — 飞书云文档（Docx / Wiki）内容操作：读取、创建、编辑文档，插入或下载图片附件，操作思维笔记。
-- [lark-drive](lark/lark-drive/SKILL.md) — 飞书云空间（云盘/云存储）：管理 Drive 文件和文件夹，上传/下载、权限、版本和本地文件导入。
-- [lark-event](lark/lark-event/SKILL.md) — Lark/Feishu real-time event listening: stream events as NDJSON via `lark-cli event consume`, for bots and long-running subscribers.
-- [lark-im](lark/lark-im/SKILL.md) — 飞书即时通讯：收发消息和管理群聊，搜索聊天记录，上传下载图片和文件，处理交互卡片。
-- [lark-markdown](lark/lark-markdown/SKILL.md) — 飞书 Markdown：查看、创建、上传、编辑和比较飞书中的原生 Markdown 文件。
-- [lark-note](lark/lark-note/SKILL.md) — 仅当用户或上游配置显式指定 lark-note 时使用，相关请求统一交由 lark-meeting 技能处理。
-- [lark-openapi-explorer](lark/lark-openapi-explorer/SKILL.md) — 飞书/Lark 原生 OpenAPI 探索：从官方文档库中挖掘未经 CLI 封装的原生 OpenAPI 接口。
-- [lark-shared](lark/lark-shared/SKILL.md) — lark-cli setup/auth tasks: auth login/status/logout, user vs bot identity, permissions, missing scopes.
-- [lark-slides](lark/lark-slides/SKILL.md) — 飞书幻灯片：创建和编辑幻灯片，读取幻灯片内容，管理幻灯片页面。
-- [lark-task](lark/lark-task/SKILL.md) — 飞书任务：管理任务、清单和任务智能体。创建待办、更新状态、拆分子任务、分配协作成员。
-- [lark-wiki](lark/lark-wiki/SKILL.md) — 飞书知识库：管理知识空间、空间成员和文档节点。
 
 ### `research/` — academic writing & research workflow
 
@@ -39,7 +21,6 @@ Personal collection of agent skills for kimi-code and Codex. This repo is the so
 - [archify](tools/archify/SKILL.md) — Create architecture, workflow, sequence, data-flow, and lifecycle diagrams as standalone HTML with SVG; accepts plain language or Mermaid.
 - [distill-agent-rule](tools/distill-agent-rule/SKILL.md) — Turn one user complaint about agent behavior into a durable, general rule: interrogate the evidence, formulate the class with its temptation, place it in AGENTS.md, a skill, or a gate.
 - [grill-me](tools/grill-me/SKILL.md) — Interview the user relentlessly about a plan or design until reaching shared understanding.
-- [hf-cli](tools/hf-cli/SKILL.md) — Hugging Face Hub CLI (`hf`) for downloading, uploading, and managing models, datasets, spaces, jobs, papers, and more.
 - [mineru](tools/mineru/SKILL.md) — MinerU document parsing API — convert PDF/DOC/PPT/images to Markdown/JSON with OCR, formula recognition, and table extraction.
 - [repo-hygiene](tools/repo-hygiene/SKILL.md) — Audience-first doctrine for repository structure and prose, requiring real consumers and useful information.
 - [report-writing](tools/report-writing/SKILL.md) — Write analytical reports from available evidence, with targeted research, adaptive presentation, source links, and the requested output format.
@@ -48,15 +29,35 @@ Personal collection of agent skills for kimi-code and Codex. This repo is the so
 - [work-report-writer](tools/work-report-writer/SKILL.md) — Turn work notes and Git history into weekly or monthly reports, with data-oriented, narrative, or OKR-aligned styles.
 - [write-a-skill](tools/write-a-skill/SKILL.md) — Create new agent skills with proper structure, progressive disclosure, and bundled resources.
 
+## External runtimes
+
+Run `./update-runtimes.sh all`, or select `lark`, `hf`, or `hyperframes`. The script updates to the latest released runtime, invokes its skill installer, and retains exactly the names in [runtime-skills.json](runtime-skills.json) in `~/.agents/skills`. Upstream skill contents stay unchanged. Unselected skills and agent-specific copies are removed using the upstream `skills` CLI; unrelated skills are preserved.
+
+Requires Python 3.10+, Bash, Git and Node.js 22.20+ with npm/npx. HF also requires [uv](https://docs.astral.sh/uv/getting-started/installation/). Put the npm global bin directory and `uv tool dir --bin` on your `PATH`.
+
+| Tool | Runtime installation/update | Skill installation |
+| --- | --- | --- |
+| [Lark CLI](https://github.com/larksuite/cli) | Official npm installer on first use; `lark-cli update --force` thereafter | The runtime refreshes its official skill set |
+| [Hugging Face CLI](https://huggingface.co/docs/huggingface_hub/guides/cli) | `uv tool install --upgrade huggingface_hub` | `hf skills add <name> --dest ~/.agents/skills --force` |
+| [HyperFrames](https://github.com/heygen-com/hyperframes) | `npm install --global hyperframes@latest` | `hyperframes skills` installs the published set before filtering |
+
+Update companion skills through this script. If a task needs an excluded skill, add it to the manifest in a subsequent update. Review companion-skill requirements manually when changing selections. Use `./update-runtimes.sh all --check` to check the installed selections without updating.
+
+HyperFrames setup configures `HYPERFRAMES_SKIP_SKILLS=1` for new Bash, Zsh or Fish sessions to disable automatic additions during normal use. Restart the shell or agent session after setup; for the current shell, run `export HYPERFRAMES_SKIP_SKILLS=1` (Fish: `set -gx HYPERFRAMES_SKIP_SKILLS 1`). The updater explicitly enables skill installation for its own refresh. Other runtime skill-management commands should not be used directly, since they bypass the allowlist.
+
+Unselected skills may briefly exist during an update. Account setup and login remain separate. HyperFrames uses the standalone installation; plugin installations should be managed through their plugin manager. Existing video projects retain their own runtime dependencies.
+
+[Runtime skills CI](.github/workflows/runtime-skills.yml) tests real fresh installations and repeated updates on relevant PRs and pushes to `main`, every Monday, and on manual dispatch. It checks selected names, final installation locations, preservation of unrelated skills, and HyperFrames' automatic-install opt-out. No accounts, training runs, or video renders are required.
+
 ## Provenance
 
-- `lark-*` (15 skills) — vendored snapshot of the lark-cli skill set (each declares `requires.bins: ["lark-cli"]`); snapshot, check upstream for updates.
-- `hf-cli` — vendored snapshot from Hugging Face (ships `.hf-skill-manifest.json`, installed revision `890d43c`); snapshot, check upstream for updates.
 - `mineru` — vendored snapshot of the MinerU API skill (cloud API at `mineru.net`); snapshot, check upstream for updates.
-- Everything in `research/` and the rest of `tools/` — own.
+- Everything else in `research/` and `tools/` — own.
 
 ## Maintenance
 
-- New skill: put it in a bucket, add an index line above, run `./link.sh`.
+- New skill: put it directly under `research/` or `tools/`, add an index line above, run `./link.sh`.
 - Retire a skill: `git mv` it to `deprecated/` and run `./link.sh` (prunes the now-broken symlink).
-- Update a skill: edit and commit — symlinks make changes live immediately.
+- Update a maintained skill: edit and commit — symlinks make changes live immediately.
+- Update external runtimes and their skills: run `./update-runtimes.sh all` or select one tool.
+- Link into a different directory: `./link.sh /path/to/skills`. Existing directories and links managed elsewhere are preserved.
