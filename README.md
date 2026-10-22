@@ -29,7 +29,9 @@ Personal collection of agent skills for kimi-code and Codex. This repo is the so
 - [idea-evaluator](research/idea-evaluator/SKILL.md) — Evaluates a preliminary research idea against a five-dimension framework (Higher, Faster, Stronger, Cheaper, Broader) plus a fatal-flaws audit.
 - [intro-drafter](research/intro-drafter/SKILL.md) — Drafts a 6-paragraph Introduction outline for a technical paper from a structured flowchart, aligning contributions with challenges.
 - [pre-submission-reviewer](research/pre-submission-reviewer/SKILL.md) — Pre-submission review across five dimensions (macro logic, writing, grammar, LaTeX, figures) with a reviewer-style severity taxonomy.
+- [research-promotion](research/research-promotion/SKILL.md) — Turn a research contribution's distinctive value into compelling READMEs, model and dataset cards, demos, videos, figures, and social posts.
 - [tech-paper-template](research/tech-paper-template/SKILL.md) — Structures a technical paper's full logical skeleton using a thinking-template table, with a four-point self-consistency check.
+- [throughput-methodology](research/throughput-methodology/SKILL.md) — Improve training and scientific-computing throughput through measured bottlenecks, targeted interventions, and numerical and semantic validation.
 - [vibe-research-workflow](research/vibe-research-workflow/SKILL.md) — Guides AI-assisted research across Vibe Coding, Vibe Figure, and Vibe Writing sub-flows, keeping the user in charge of academic judgment.
 
 ### `tools/` — general-purpose utilities
