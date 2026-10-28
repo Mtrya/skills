@@ -1,7 +1,6 @@
 ---
 name: distill-agent-rule
 description: Manually distill a durable agent-behavior rule from a user complaint about something an agent did — interrogate the incident against its concrete evidence one point at a time, formulate the general prohibition with its temptation, place it in a repo or user-level AGENTS.md, a skill, or a mechanical gate, and audit the existing rule corpus for supersession, merge, and deletion. Runs only on explicit user invocation; an agent must never distill a rule about its own behavior unprompted.
-disable-model-invocation: true
 user-invocable: true
 ---
 
