@@ -34,7 +34,7 @@ Personal collection of agent skills for kimi-code and Codex. Skills maintained h
 
 Run `./update-runtimes.sh all`, or select `lark`, `hf`, `hyperframes`, or `inspire`. The script updates to the latest released runtime, invokes its skill installer, and retains exactly the names in [runtime-skills.json](runtime-skills.json) in `~/.agents/skills`. Upstream skill contents stay unchanged. Unselected skills and agent-specific copies are removed using the upstream `skills` CLI; unrelated skills are preserved.
 
-Requires Python 3.10+, Bash, Git and Node.js 22.20+ with npm/npx. HF also requires [uv](https://docs.astral.sh/uv/getting-started/installation/). Put the npm global bin directory and `uv tool dir --bin` on your `PATH`.
+Requires Python 3.10+, Bash, Git and Node.js 22.20+ with npm/npx. HF and Inspire also require [uv](https://docs.astral.sh/uv/getting-started/installation/). Put the npm global bin directory and `uv tool dir --bin` on your `PATH`.
 
 | Tool | Runtime installation/update | Skill installation |
 | --- | --- | --- |

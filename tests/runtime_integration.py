@@ -54,6 +54,9 @@ def main():
     for iteration in range(2):
         run(str(REPO / "update-runtimes.sh"), args.runtime, cwd=REPO)
         run(str(REPO / "update-runtimes.sh"), args.runtime, "--check", cwd=REPO)
+        if args.runtime == "inspire":
+            # The forced reinstall must have replaced the pre-existing shim with a working CLI.
+            run(str(shim), "--version")
         assert {p.name for p in canonical.iterdir() if not p.name.startswith(".")} == selected | {"unrelated-skill"}
         for root in other_roots:
             assert {p.name for p in root.iterdir() if not p.name.startswith(".")} == {"unrelated-skill"}, root

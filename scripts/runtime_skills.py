@@ -137,7 +137,7 @@ def purge_untracked(runtime, selected, home):
     if stale:
         run("npx", "--yes", "skills", "remove", *stale, "--global", "--yes")
     for name in sorted(selected):
-        target = Path(os.environ.get("KIMI_CODE_DIR", home / ".kimi-code")) / "skills" / name
+        target = Path(os.environ.get("KIMI_CODE_HOME", home / ".kimi-code")) / "skills" / name
         if target.is_dir() and not target.is_symlink():
             shutil.rmtree(target)
 
