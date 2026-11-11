@@ -17,6 +17,7 @@ class LinkTests(unittest.TestCase):
         self.dest.mkdir()
         shutil.copy(Path(__file__).resolve().parents[1] / "link.sh", self.repo)
         subprocess.run(["git", "init", "-q", str(self.repo)], check=True)
+        self.home = self.root / "home"
 
     def skill(self, path):
         folder = self.repo / path
@@ -31,7 +32,14 @@ class LinkTests(unittest.TestCase):
             check=True,
             capture_output=True,
             text=True,
+            env=dict(os.environ, HOME=str(self.home)),
         )
+
+    def guide(self):
+        (self.repo / "agents").mkdir(exist_ok=True)
+        path = self.repo / "agents" / "AGENTS.md"
+        path.write_text("# Agent Guide\n")
+        return path
 
     def test_links_tracked_and_new_skills_only(self):
         tracked = self.skill("research/tracked")
@@ -47,6 +55,38 @@ class LinkTests(unittest.TestCase):
         self.assertEqual({p.name for p in self.dest.iterdir()}, {"tracked", "new"})
         self.assertEqual((self.dest / "tracked").resolve(), tracked)
         self.assertEqual((self.dest / "new").resolve(), new)
+
+    def test_links_harness_guides_into_home(self):
+        guide = self.guide()
+        self.run_link()
+        for rel in (".kimi-code/AGENTS.md", ".codex/AGENTS.md", ".config/opencode/AGENTS.md"):
+            dest = self.home / rel
+            self.assertTrue(dest.is_symlink(), rel)
+            self.assertEqual(dest.resolve(), guide)
+
+    def test_preserves_unowned_guide_destinations(self):
+        self.guide()
+        existing = self.home / ".kimi-code" / "AGENTS.md"
+        existing.parent.mkdir(parents=True)
+        existing.write_text("local\n")
+        foreign = self.home / ".codex" / "AGENTS.md"
+        foreign.parent.mkdir(parents=True)
+        foreign.symlink_to(self.root / "elsewhere")
+        self.run_link()
+        self.assertEqual(existing.read_text(), "local\n")
+        self.assertEqual(os.readlink(foreign), str(self.root / "elsewhere"))
+
+    def test_refreshes_owned_guide_link_and_prunes_retired_source(self):
+        guide = self.guide()
+        dest = self.home / ".kimi-code" / "AGENTS.md"
+        dest.parent.mkdir(parents=True)
+        dest.symlink_to(guide)
+        guide.write_text("# Agent Guide v2\n")
+        self.run_link()
+        self.assertEqual(dest.read_text(), "# Agent Guide v2\n")
+        guide.unlink()
+        self.run_link()
+        self.assertFalse(os.path.lexists(dest))
 
     def test_preserves_other_owners_and_prunes_retired_links(self):
         self.skill("tools/directory")

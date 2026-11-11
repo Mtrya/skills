@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-# Link maintained skills into ~/.agents/skills so agent harnesses
-# (kimi-code, Codex) discover them. Re-run after adding/retiring a skill.
+# Link maintained skills into ~/.agents/skills and the harness user-level
+# AGENTS.md guide into each harness's config path, so agent harnesses
+# (kimi-code, Codex, OpenCode) discover them. Re-run after adding/retiring
+# a skill or changing the managed guide set.
 set -euo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -43,3 +45,37 @@ while IFS= read -r -d '' link; do
     esac
   fi
 done < <(find "$DEST" -maxdepth 1 -type l -print0)
+
+# Harness user-level guides: tracked file -> on-disk AGENTS.md path.
+agent_links=(
+  "agents/AGENTS.md|$HOME/.kimi-code/AGENTS.md"
+  "agents/AGENTS.md|$HOME/.codex/AGENTS.md"
+  "agents/AGENTS.md|$HOME/.config/opencode/AGENTS.md"
+)
+
+for pair in "${agent_links[@]}"; do
+  src_rel="${pair%%|*}"
+  dest="${pair#*|}"
+  src="$REPO/$src_rel"
+
+  if [ -L "$dest" ]; then
+    case "$(readlink "$dest")" in
+      "$REPO"/*)
+        if [ -f "$src" ]; then
+          ln -sfn "$src" "$dest"
+          echo "linked: $dest -> $src_rel"
+        else
+          rm "$dest"
+          echo "pruned: $dest (retired guide source)"
+        fi
+        ;;
+      *) echo "WARNING: $dest is managed elsewhere; skipping $src_rel" >&2 ;;
+    esac
+  elif [ -e "$dest" ]; then
+    echo "WARNING: $dest exists and is not a symlink; skipping $src_rel" >&2
+  elif [ -f "$src" ]; then
+    mkdir -p "$(dirname "$dest")"
+    ln -s "$src" "$dest"
+    echo "linked: $dest -> $src_rel"
+  fi
+done

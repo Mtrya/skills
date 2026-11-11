@@ -30,6 +30,13 @@ Personal collection of agent skills for kimi-code and Codex. Skills maintained h
 - [work-report-writer](tools/work-report-writer/SKILL.md) — Turn work notes and Git history into weekly or monthly reports, with data-oriented, narrative, or OKR-aligned styles.
 - [write-a-skill](tools/write-a-skill/SKILL.md) — Create new agent skills with proper structure, progressive disclosure, and bundled resources.
 
+## Harness guides
+
+[agents/AGENTS.md](agents/AGENTS.md) is the user-level guide shared by every agent harness on every machine. `./link.sh` links it into each harness's config path (`~/.kimi-code/AGENTS.md`, `~/.codex/AGENTS.md`, `~/.config/opencode/AGENTS.md`), so harnesses read one file and edits go live immediately.
+
+- Adding a harness: append its destination to `agent_links` in [link.sh](link.sh) and run `./link.sh`.
+- Existing file in the way: the linker never touches a file it does not own — move the old file aside, then run `./link.sh`.
+
 ## External runtimes
 
 Run `./update-runtimes.sh all`, or select `lark`, `hf`, `hyperframes`, or `inspire`. The script updates to the latest released runtime, invokes its skill installer, and retains exactly the names in [runtime-skills.json](runtime-skills.json) in `~/.agents/skills`. Upstream skill contents stay unchanged. Unselected skills and agent-specific copies are removed using the upstream `skills` CLI; unrelated skills are preserved.
@@ -61,5 +68,6 @@ Unselected skills may briefly exist during an update. Account setup and login re
 - New skill: put it directly under `research/` or `tools/`, add an index line above, run `./link.sh`.
 - Retire a skill: `git mv` it to `deprecated/` and run `./link.sh` (prunes the now-broken symlink).
 - Update a maintained skill: edit and commit — symlinks make changes live immediately.
+- Update the harness guide: edit `agents/AGENTS.md` and commit — the links make it live on every machine that has pulled and re-run `./link.sh`.
 - Update external runtimes and their skills: run `./update-runtimes.sh all` or select one tool.
 - Link into a different directory: `./link.sh /path/to/skills`. Existing directories and links managed elsewhere are preserved.
