@@ -32,7 +32,7 @@ Personal collection of agent skills for kimi-code and Codex. Skills maintained h
 
 ## External runtimes
 
-Run `./update-runtimes.sh all`, or select `lark`, `hf`, or `hyperframes`. The script updates to the latest released runtime, invokes its skill installer, and retains exactly the names in [runtime-skills.json](runtime-skills.json) in `~/.agents/skills`. Upstream skill contents stay unchanged. Unselected skills and agent-specific copies are removed using the upstream `skills` CLI; unrelated skills are preserved.
+Run `./update-runtimes.sh all`, or select `lark`, `hf`, `hyperframes`, or `inspire`. The script updates to the latest released runtime, invokes its skill installer, and retains exactly the names in [runtime-skills.json](runtime-skills.json) in `~/.agents/skills`. Upstream skill contents stay unchanged. Unselected skills and agent-specific copies are removed using the upstream `skills` CLI; unrelated skills are preserved.
 
 Requires Python 3.10+, Bash, Git and Node.js 22.20+ with npm/npx. HF also requires [uv](https://docs.astral.sh/uv/getting-started/installation/). Put the npm global bin directory and `uv tool dir --bin` on your `PATH`.
 
@@ -41,6 +41,7 @@ Requires Python 3.10+, Bash, Git and Node.js 22.20+ with npm/npx. HF also requir
 | [Lark CLI](https://github.com/larksuite/cli) | Official npm installer on first use; `lark-cli update --force` thereafter | The runtime refreshes its official skill set |
 | [Hugging Face CLI](https://huggingface.co/docs/huggingface_hub/guides/cli) | `uv tool install --upgrade --force huggingface_hub` | `hf skills add <name> --dest ~/.agents/skills --force` |
 | [HyperFrames](https://github.com/heygen-com/hyperframes) | `npm install --global hyperframes@latest` | `hyperframes skills` installs the published set before filtering |
+| [Inspire CLI](https://github.com/RealZillionX/InspireSkill) | `uv tool install --upgrade --force inspire-skill` | `skills add realzillionx/inspireskill` installs the upstream skill docs before filtering |
 
 Update companion skills through this script. If a task needs an excluded skill, add it to the manifest in a subsequent update. Review companion-skill requirements manually when changing selections. Use `./update-runtimes.sh all --check` to check the installed selections without updating.
 

@@ -22,7 +22,7 @@ def snapshot(root):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("runtime", choices=["lark", "hf", "hyperframes"])
+    parser.add_argument("runtime", choices=["lark", "hf", "hyperframes", "inspire"])
     args = parser.parse_args()
     selected = set(json.loads((REPO / "runtime-skills.json").read_text())[args.runtime])
     home = Path.home()
@@ -33,6 +33,13 @@ def main():
     if args.runtime == "hyperframes":
         # Exercise Bash's login-file precedence even on minimal container images.
         (home / ".bash_profile").touch(exist_ok=True)
+    if args.runtime == "inspire":
+        # A pre-existing `inspire` the updater does not own must not block installation.
+        bin_dir = Path(run("uv", "tool", "dir", "--bin", capture_output=True).stdout.strip())
+        bin_dir.mkdir(parents=True, exist_ok=True)
+        shim = bin_dir / "inspire"
+        shim.write_text("#!/bin/sh\nexit 1\n")
+        shim.chmod(0o755)
 
     # Make upstream exercise copying and mirroring, not just a pristine home.
     other_roots = [home / ".claude/skills", home / ".cursor/skills", home / ".config/opencode/skills"]

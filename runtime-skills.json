@@ -27,5 +27,8 @@
     "hyperframes-cli",
     "hyperframes-registry",
     "media-use"
+  ],
+  "inspire": [
+    "inspire"
   ]
 }
