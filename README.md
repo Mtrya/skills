@@ -39,7 +39,7 @@ Personal collection of agent skills for kimi-code and Codex. Skills maintained h
 
 ## Machine sync
 
-Each machine runs `scripts/sync.sh` on a systemd user timer (every 15 minutes): local edits are committed to `sync/<hostname>` and published as that machine's open PR, merged upstream work is pulled and rebased automatically, and closing a machine's PR on GitHub rejects and wipes its local changes. Setup on a new machine: hand [machine-setup.md](machine-setup.md) to an agent there.
+Each machine runs `scripts/sync.sh` on a systemd user timer (every 15 minutes): local edits are committed to `sync/<hostname>` and published as that machine's open PR, merged upstream work is adopted automatically (including squash merges), and closing a machine's PR on GitHub rejects and wipes its local changes once. Reopening before the next cycle's rejection check cancels the discard. PR-page edits are adopted, conflicts preserve local work and receive one comment per upstream-main commit, and idle cycles are silent. Setup on a new machine: hand [machine-setup.md](machine-setup.md) to an agent there.
 
 ## External runtimes
 

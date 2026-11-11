@@ -30,7 +30,7 @@ Verify: `systemctl --user list-timers` lists both timers with a next run schedul
 
 ## 5. First sync and runtime refresh
 
-Start `skills-sync.service` once. On a clean machine it reports "no local changes to publish". If the machine had pre-existing local edits in the clone, they are now published; check with `gh pr list --head "sync/$(hostname -s)"` and report the PR URL to the user for review.
+Start `skills-sync.service` once. A successful cycle with nothing to publish is silent. If the machine had pre-existing local edits in the clone, they are now published; check with `gh pr list --head "sync/$(hostname -s)"` and report the PR URL to the user for review.
 
 Then run `./update-runtimes.sh all` to bring the companion runtimes and their skills up to date. This needs network access and may take several minutes.
 
@@ -38,5 +38,12 @@ Verify: `gh pr list --head "sync/$(hostname -s)"` shows the expected PR (or none
 
 ## Notes
 
-- The sync service never pushes to `main`; everything lands through a PR the user merges. Closing a machine's PR on GitHub rejects its local changes and the machine wipes itself; reopening within one cycle cancels the rejection.
+- Edit a skill locally and the next cycle commits and publishes it as the machine's open PR. The timer runs every 15 minutes while the machine and user service are running; network failures retry on the next cycle.
+- Merge the PR and every machine adopts main on its next successful cycle, including added and removed skill links. The publishing machine drops the merged PR's commit prefix, including squash merges, and preserves work added after that PR.
+- Close the PR without merging and the next cycle resets that machine to main, removes untracked non-ignored files and deletes its remote branch. The closed PR remains on GitHub. Each rejection is acknowledged by PR number, so later edits can create a new PR. Reopening before the cycle's final rejection check cancels the discard; that check and the local reset are separate operations, so reopening after the check may be too late.
+- Edits committed on the PR page are adopted before publication. Remote history rewrites replay only unpublished local commits; conflicts preserve local work for a human decision.
+- A conflict with main leaves the machine's work on an open PR, where GitHub can show its conflict status, and adds one comment per upstream-main SHA, recorded in `.git/skills-sync.state`. Repeated cycles do not repeat the comment. `flock` skips overlapping cycles.
+- Each clone creates `.git/skills-sync.identity` on first publication and records its token in commit trailers and the PR body. Do not copy that file to another machine. If hostnames collide, set a unique `SYNC_ID` in the service environment before first publication. Existing branches or PRs without a matching ownership marker stop before adoption or deletion; upgrading an older installation requires explicit ownership migration after verifying which machine owns the branch.
+- The sync service never pushes to `main`; everything lands through a PR the user merges. Enable GitHub branch protection on `main` as a separate repository administration step.
+- After updating the timer file, copy it into `~/.config/systemd/user/` again and run `systemctl --user daemon-reload` followed by `systemctl --user restart skills-sync.timer`.
 - Local `main` must never receive local commits — all work happens on the checked-out `sync/<hostname>` branch, which the service manages. If local `main` has diverged, the service stops with an error and the situation needs a human decision.
