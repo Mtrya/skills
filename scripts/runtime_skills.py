@@ -16,13 +16,14 @@ SOURCES = {
     "lark": {"larksuite/cli", "open.feishu.cn", "open.larksuite.com"},
     "hf": {"huggingface/skills"},
     "hyperframes": {"heygen-com/hyperframes"},
+    "inspire": {"realzillionx/inspireskill"},
 }
 
 
 def load_manifest(path=MANIFEST):
     manifest = json.loads(path.read_text())
     if set(manifest) != set(SOURCES):
-        raise ValueError("The manifest must contain lark, hf and hyperframes.")
+        raise ValueError("The manifest must contain lark, hf, hyperframes and inspire.")
     for runtime, names in manifest.items():
         if not isinstance(names, list) or not names:
             raise ValueError(f"{runtime}: expected a nonempty list of skill names")
@@ -52,7 +53,7 @@ def inventory():
 def owned_skills(runtime, entries):
     return {
         entry["name"] for entry in entries
-        if entry.get("source") in SOURCES[runtime]
+        if str(entry.get("source") or "").lower() in SOURCES[runtime]
         or (runtime == "hf" and (Path(entry["path"]) / ".hf-skill-manifest.json").is_file())
     }
 
@@ -128,6 +129,19 @@ def detach_legacy_links(runtime, home):
                 link.unlink()
 
 
+def purge_untracked(runtime, selected, home):
+    """Remove installer-written copies that the skills CLI does not track."""
+    entries = inventory()
+    stale = sorted({entry["name"] for entry in entries if entry["name"] in selected}
+                   - owned_skills(runtime, entries))
+    if stale:
+        run("npx", "--yes", "skills", "remove", *stale, "--global", "--yes")
+    for name in sorted(selected):
+        target = Path(os.environ.get("KIMI_CODE_HOME", home / ".kimi-code")) / "skills" / name
+        if target.is_dir() and not target.is_symlink():
+            shutil.rmtree(target)
+
+
 def enable_managed_skills(home):
     """Disable HyperFrames' automatic skill writes in future shell sessions."""
     shell = Path(os.environ.get("SHELL", "/bin/bash")).name
@@ -171,6 +185,10 @@ def install(runtime, selected, home):
                 raise RuntimeError(f"Unknown Hugging Face skills: {', '.join(sorted(missing))}")
             for name in selected:
                 run(hf, "skills", "add", name, "--dest", str(home / ".agents/skills"), "--force", cwd=temp)
+        elif runtime == "inspire":
+            run("uv", "tool", "install", "--upgrade", "--force", "inspire-skill", cwd=temp)
+            purge_untracked(runtime, selected, home)
+            run("npx", "--yes", "skills", "add", "realzillionx/inspireskill", "--global", "--skill", "inspire", "--yes", cwd=temp)
         else:
             run("npm", "install", "--global", "hyperframes@latest", cwd=temp)
             binary = str(Path(run("npm", "prefix", "--global", capture=True)) / "bin/hyperframes")
