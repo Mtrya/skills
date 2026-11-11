@@ -177,7 +177,7 @@ def install(runtime, selected, home):
             else:
                 run("npx", "--yes", "@larksuite/cli@latest", "install", stdin=subprocess.DEVNULL, cwd=temp)
         elif runtime == "hf":
-            run("uv", "tool", "install", "--upgrade", "huggingface_hub", cwd=temp)
+            run("uv", "tool", "install", "--upgrade", "--force", "huggingface_hub", cwd=temp)
             hf = str(Path(run("uv", "tool", "dir", "--bin", capture=True)) / "hf")
             available = {entry["name"] for entry in json.loads(run(hf, "skills", "list", "--json", capture=True, cwd=temp))}
             missing = set(selected) - available

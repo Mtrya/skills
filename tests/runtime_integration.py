@@ -40,6 +40,13 @@ def main():
         shim = bin_dir / "inspire"
         shim.write_text("#!/bin/sh\nexit 1\n")
         shim.chmod(0o755)
+    if args.runtime == "hf":
+        # A pre-existing `hf` the updater does not own must not block installation.
+        bin_dir = Path(run("uv", "tool", "dir", "--bin", capture_output=True).stdout.strip())
+        bin_dir.mkdir(parents=True, exist_ok=True)
+        shim = bin_dir / "hf"
+        shim.write_text("#!/bin/sh\nexit 1\n")
+        shim.chmod(0o755)
 
     # Make upstream exercise copying and mirroring, not just a pristine home.
     other_roots = [home / ".claude/skills", home / ".cursor/skills", home / ".config/opencode/skills"]
