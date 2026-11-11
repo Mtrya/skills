@@ -1,0 +1,8 @@
+[Unit]
+Description=Update external agent runtimes and their skills (update-runtimes.sh)
+
+[Service]
+Type=oneshot
+ExecStart=%h/.agents/skills-repo/update-runtimes.sh all
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+TimeoutStartSec=2h

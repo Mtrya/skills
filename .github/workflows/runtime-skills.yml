@@ -4,9 +4,11 @@ on:
   pull_request:
     paths:
       - agents/**
+      - machine-setup.md
       - runtime-skills.json
+      - scripts/**
+      - systemd/**
       - update-runtimes.sh
-      - scripts/runtime_skills.py
       - link.sh
       - tests/**
       - .github/workflows/runtime-skills.yml
@@ -14,7 +16,10 @@ on:
     branches: [main]
     paths:
       - agents/**
+      - machine-setup.md
       - runtime-skills.json
+      - scripts/**
+      - systemd/**
       - update-runtimes.sh
       - scripts/runtime_skills.py
       - link.sh
@@ -52,7 +57,7 @@ jobs:
           enable-cache: false
       - name: Check linker and shell syntax
         run: |
-          bash -n link.sh update-runtimes.sh
+          bash -n link.sh update-runtimes.sh scripts/sync.sh
           python3 -m unittest discover -s tests -v
       - name: Install and update against current upstream releases
         run: python3 tests/runtime_integration.py '${{ matrix.runtime }}'

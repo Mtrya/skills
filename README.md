@@ -37,6 +37,10 @@ Personal collection of agent skills for kimi-code and Codex. Skills maintained h
 - Adding a harness: append its destination to `agent_links` in [link.sh](link.sh) and run `./link.sh`.
 - Existing file in the way: the linker never touches a file it does not own — move the old file aside, then run `./link.sh`.
 
+## Machine sync
+
+Each machine runs `scripts/sync.sh` on a systemd user timer (every 15 minutes): local edits are committed to `sync/<hostname>` and published as that machine's open PR, merged upstream work is pulled and rebased automatically, and closing a machine's PR on GitHub rejects and wipes its local changes. Setup on a new machine: hand [machine-setup.md](machine-setup.md) to an agent there.
+
 ## External runtimes
 
 Run `./update-runtimes.sh all`, or select `lark`, `hf`, `hyperframes`, or `inspire`. The script updates to the latest released runtime, invokes its skill installer, and retains exactly the names in [runtime-skills.json](runtime-skills.json) in `~/.agents/skills`. Upstream skill contents stay unchanged. Unselected skills and agent-specific copies are removed using the upstream `skills` CLI; unrelated skills are preserved.
