@@ -53,8 +53,11 @@ def inventory():
 def owned_skills(runtime, entries):
     return {
         entry["name"] for entry in entries
-        if str(entry.get("source") or "").lower() in SOURCES[runtime]
-        or (runtime == "hf" and (Path(entry["path"]) / ".hf-skill-manifest.json").is_file())
+        if entry.get("status") != "missing"
+        and (
+            str(entry.get("source") or "").lower() in SOURCES[runtime]
+            or (runtime == "hf" and entry.get("path") and (Path(entry["path"]) / ".hf-skill-manifest.json").is_file())
+        )
     }
 
 
@@ -177,7 +180,7 @@ def install(runtime, selected, home):
             else:
                 run("npx", "--yes", "@larksuite/cli@latest", "install", stdin=subprocess.DEVNULL, cwd=temp)
         elif runtime == "hf":
-            run("uv", "tool", "install", "--upgrade", "huggingface_hub", cwd=temp)
+            run("uv", "tool", "install", "--upgrade", "--force", "huggingface_hub", cwd=temp)
             hf = str(Path(run("uv", "tool", "dir", "--bin", capture=True)) / "hf")
             available = {entry["name"] for entry in json.loads(run(hf, "skills", "list", "--json", capture=True, cwd=temp))}
             missing = set(selected) - available
