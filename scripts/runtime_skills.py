@@ -53,8 +53,11 @@ def inventory():
 def owned_skills(runtime, entries):
     return {
         entry["name"] for entry in entries
-        if str(entry.get("source") or "").lower() in SOURCES[runtime]
-        or (runtime == "hf" and (Path(entry["path"]) / ".hf-skill-manifest.json").is_file())
+        if entry.get("status") != "missing"
+        and (
+            str(entry.get("source") or "").lower() in SOURCES[runtime]
+            or (runtime == "hf" and entry.get("path") and (Path(entry["path"]) / ".hf-skill-manifest.json").is_file())
+        )
     }
 
 
