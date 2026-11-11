@@ -18,6 +18,7 @@ Personal collection of agent skills for kimi-code and Codex. Skills maintained h
 
 ### `tools/` — general-purpose utilities
 
+- [affirmative-first-writing](tools/affirmative-first-writing/SKILL.md) — Writing doctrine for any natural language: strip defensive negation, unsolicited rebuttals, "not X but Y" filler, and over-hedging; explain mechanisms directly.
 - [archify](tools/archify/SKILL.md) — Create architecture, workflow, sequence, data-flow, and lifecycle diagrams as standalone HTML with SVG; accepts plain language or Mermaid.
 - [distill-agent-rule](tools/distill-agent-rule/SKILL.md) — Turn one user complaint about agent behavior into a durable, general rule: interrogate the evidence, formulate the class with its temptation, place it in AGENTS.md, a skill, or a gate.
 - [grill-me](tools/grill-me/SKILL.md) — Interview the user relentlessly about a plan or design until reaching shared understanding.
@@ -38,7 +39,7 @@ Requires Python 3.10+, Bash, Git and Node.js 22.20+ with npm/npx. HF also requir
 | Tool | Runtime installation/update | Skill installation |
 | --- | --- | --- |
 | [Lark CLI](https://github.com/larksuite/cli) | Official npm installer on first use; `lark-cli update --force` thereafter | The runtime refreshes its official skill set |
-| [Hugging Face CLI](https://huggingface.co/docs/huggingface_hub/guides/cli) | `uv tool install --upgrade huggingface_hub` | `hf skills add <name> --dest ~/.agents/skills --force` |
+| [Hugging Face CLI](https://huggingface.co/docs/huggingface_hub/guides/cli) | `uv tool install --upgrade --force huggingface_hub` | `hf skills add <name> --dest ~/.agents/skills --force` |
 | [HyperFrames](https://github.com/heygen-com/hyperframes) | `npm install --global hyperframes@latest` | `hyperframes skills` installs the published set before filtering |
 
 Update companion skills through this script. If a task needs an excluded skill, add it to the manifest in a subsequent update. Review companion-skill requirements manually when changing selections. Use `./update-runtimes.sh all --check` to check the installed selections without updating.
