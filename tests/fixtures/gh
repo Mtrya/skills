@@ -1,0 +1,66 @@
+#!/usr/bin/env python3
+"""Offline GitHub PR boundary; Git operations use the real bare repository.
+
+Serve PR records and run the script's actual jq expression, recording writes.
+Only this unavailable external service is substituted in sync integration tests.
+"""
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+
+path = Path(os.environ["SYNC_TEST_GITHUB"])
+data = json.loads(path.read_text())
+args = sys.argv[1:]
+data.setdefault("calls", []).append(args)
+
+
+def save():
+    path.write_text(json.dumps(data))
+
+
+def flag(name):
+    return args[args.index(name) + 1]
+
+
+def head():
+    return subprocess.check_output(
+        ["git", "--git-dir", data["origin"], "rev-parse", "refs/heads/sync/tester"],
+        text=True,
+    ).strip()
+
+
+assert args[0] == "pr", args
+if args[1] == "list":
+    data["reads"] = data.get("reads", 0) + 1
+    event = data.get("events", {}).get(str(data["reads"]))
+    if event == "fail":
+        save()
+        sys.exit(1)
+    if event:
+        data["prs"][0]["state"] = event
+    save()
+    records = data["prs"][:int(flag("--limit"))]
+    subprocess.run(["jq", "-r", flag("--jq")], input=json.dumps(records), text=True, check=True)
+elif args[1] == "create":
+    assert flag("--base") == "main"
+    assert flag("--head") == "sync/tester"
+    assert "--draft" not in args
+    data["prs"].insert(0, {
+        "number": max([p["number"] for p in data["prs"]], default=0) + 1,
+        "state": "OPEN", "headRefOid": head(), "mergeCommit": None,
+        "body": Path(flag("--body-file")).read_text(),
+    })
+    save()
+elif args[1] == "edit":
+    pr = next(p for p in data["prs"] if str(p["number"]) == args[2])
+    assert pr["state"] == "OPEN"
+    pr["body"] = Path(flag("--body-file")).read_text()
+    pr["headRefOid"] = head()
+    save()
+elif args[1] == "comment":
+    data.setdefault("comments", []).append({"number": int(args[2]), "body": flag("--body")})
+    save()
+else:
+    raise AssertionError(args)

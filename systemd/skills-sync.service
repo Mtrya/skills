@@ -1,0 +1,8 @@
+[Unit]
+Description=Publish local skills-repo changes and adopt upstream (one sync cycle)
+
+[Service]
+Type=oneshot
+ExecStart=%h/.agents/skills-repo/scripts/sync.sh
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+TimeoutStartSec=10min
