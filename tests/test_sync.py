@@ -36,12 +36,18 @@ class SyncTests(unittest.TestCase):
         self._git("-C", str(self.work), "config", "user.name", "tester")
         self._git("-C", str(self.work), "config", "user.email", "tester@example.com")
 
+    def _env(self):
+        env = dict(os.environ, SYNC_ID="tester", HOME=str(self.root))
+        for var in ("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_OBJECT_DIRECTORY"):
+            env.pop(var, None)
+        return env
+
     def _git(self, *args):
-        subprocess.run(["git", *args], check=True, capture_output=True, text=True)
+        subprocess.run(["git", *args], check=True, capture_output=True, text=True, env=self._env())
 
     def _git_out(self, *args):
         return subprocess.run(
-            ["git", *args], check=True, capture_output=True, text=True
+            ["git", *args], check=True, capture_output=True, text=True, env=self._env()
         ).stdout
 
     def run_sync(self, *args):
@@ -49,7 +55,7 @@ class SyncTests(unittest.TestCase):
             ["bash", str(self.work / "scripts" / "sync.sh"), *args],
             capture_output=True,
             text=True,
-            env=dict(os.environ, SYNC_ID="tester", HOME=str(self.root)),
+            env=self._env(),
         )
 
     def peer(self):

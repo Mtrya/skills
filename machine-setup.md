@@ -14,7 +14,7 @@ Verify: `git -C ~/.agents/skills-repo log --oneline -1` prints the newest commit
 
 Run `./link.sh` in the clone. If any of `~/.kimi-code/AGENTS.md`, `~/.codex/AGENTS.md` or `~/.config/opencode/AGENTS.md` already exists as a regular file, show its diff against `agents/AGENTS.md` to the user, move it aside next to itself (`AGENTS.md.bak`), and run `./link.sh` again so the path becomes a symlink into the repo. The linker never touches a file it does not own.
 
-Verify: `readlink ~/.kimi-code/AGENTS.md ~/.codex/AGENTS.md` points into `~/.agents/skills-repo`, and `ls ~/.agents/skills` shows the managed skills.
+Verify: `readlink ~/.kimi-code/AGENTS.md` and `readlink ~/.codex/AGENTS.md` point into `~/.agents/skills-repo`, and `ls ~/.agents/skills` shows the managed skills.
 
 ## 3. GitHub authentication
 
@@ -24,7 +24,7 @@ Verify: `git -C ~/.agents/skills-repo ls-remote origin` succeeds without prompti
 
 ## 4. Install the systemd user units
 
-Copy `systemd/skills-sync.service`, `systemd/skills-sync.timer`, `systemd/runtime-update.service` and `systemd/runtime-update.timer` from the clone into `~/.config/systemd/user/`. In both `.service` files, extend the `PATH` environment line with the npm global bin directory (`npm prefix -g`) and the uv binary directory (`uv tool dir --bin`) when those tools are installed; report any tool that is missing instead of silently dropping it. Then run `systemctl --user daemon-reload` and `systemctl --user enable --now skills-sync.timer runtime-update.timer`.
+Copy `systemd/skills-sync.service`, `systemd/skills-sync.timer`, `systemd/runtime-update.service` and `systemd/runtime-update.timer` from the clone into `~/.config/systemd/user/`. In both `.service` files, extend the `PATH` environment line with the actual executable directories: `$(npm prefix -g)/bin` (the `bin` directory of the npm global prefix, not the prefix itself) and `$(uv tool dir --bin)` when those tools are installed, plus the directory containing the `gh` executable (`dirname "$(command -v gh)"`) so the sync service finds gh even when it lives outside the system PATH. Report any tool that is missing instead of silently dropping it. Then run `systemctl --user daemon-reload` and `systemctl --user enable --now skills-sync.timer runtime-update.timer`. If the user expects the timers to keep running after logout, run `loginctl enable-linger` for the user.
 
 Verify: `systemctl --user list-timers` lists both timers with a next run scheduled, and `systemctl --user start skills-sync.service` completes without error; inspect its output with `journalctl --user -u skills-sync.service -n 20`.
 
