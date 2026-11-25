@@ -39,7 +39,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        runtime: [lark, hf, hyperframes, inspire]
+        runtime: [lark, hf, hyperframes, inspire, colab]
     env:
       PYTHONDONTWRITEBYTECODE: '1'
       DO_NOT_TRACK: '1'
