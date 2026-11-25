@@ -31,6 +31,14 @@ class OwnedSkillsTests(unittest.TestCase):
             entries = [{"name": "hf-cli", "source": "someone-else/repo", "path": temp, "status": "tracked"}]
             self.assertEqual(owned_skills("hf", entries), {"hf-cli"})
 
+    def test_colab_claims_its_selected_untracked_skill(self):
+        entries = [{"name": "colab-operator", "source": None, "path": "/x/colab-operator", "status": "untracked"}]
+        self.assertEqual(owned_skills("colab", entries, {"colab-operator"}), {"colab-operator"})
+
+    def test_colab_does_not_claim_unselected_untracked_skills(self):
+        entries = [{"name": "mineru", "source": None, "path": "/x/mineru", "status": "untracked"}]
+        self.assertEqual(owned_skills("colab", entries, {"colab-operator"}), set())
+
 
 if __name__ == "__main__":
     unittest.main()

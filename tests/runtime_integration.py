@@ -22,7 +22,7 @@ def snapshot(root):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("runtime", choices=["lark", "hf", "hyperframes", "inspire"])
+    parser.add_argument("runtime", choices=["lark", "hf", "hyperframes", "inspire", "colab"])
     args = parser.parse_args()
     selected = set(json.loads((REPO / "runtime-skills.json").read_text())[args.runtime])
     home = Path.home()
@@ -47,6 +47,13 @@ def main():
         shim = bin_dir / "hf"
         shim.write_text("#!/bin/sh\nexit 1\n")
         shim.chmod(0o755)
+    if args.runtime == "colab":
+        # A pre-existing `colab` the updater does not own must not block installation.
+        bin_dir = Path(run("uv", "tool", "dir", "--bin", capture_output=True).stdout.strip())
+        bin_dir.mkdir(parents=True, exist_ok=True)
+        shim = bin_dir / "colab"
+        shim.write_text("#!/bin/sh\nexit 1\n")
+        shim.chmod(0o755)
 
     # Make upstream exercise copying and mirroring, not just a pristine home.
     other_roots = [home / ".claude/skills", home / ".cursor/skills", home / ".config/opencode/skills"]
@@ -64,6 +71,9 @@ def main():
         if args.runtime == "inspire":
             # The forced reinstall must have replaced the pre-existing shim with a working CLI.
             run(str(shim), "--version")
+        if args.runtime == "colab":
+            # The forced reinstall must have replaced the pre-existing shim with a working CLI.
+            run(str(shim), "version")
         assert {p.name for p in canonical.iterdir() if not p.name.startswith(".")} == selected | {"unrelated-skill"}
         for root in other_roots:
             assert {p.name for p in root.iterdir() if not p.name.startswith(".")} == {"unrelated-skill"}, root
