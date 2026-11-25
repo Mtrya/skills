@@ -52,7 +52,7 @@ jobs:
           node-version: '24'
           package-manager-cache: false
       - uses: astral-sh/setup-uv@v10.3.2
-        if: matrix.runtime == 'hf' || matrix.runtime == 'inspire'
+        if: matrix.runtime == 'hf' || matrix.runtime == 'inspire' || matrix.runtime == 'colab'
         with:
           enable-cache: false
       - name: Check linker and shell syntax

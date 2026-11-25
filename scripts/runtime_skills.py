@@ -17,13 +17,14 @@ SOURCES = {
     "hf": {"huggingface/skills"},
     "hyperframes": {"heygen-com/hyperframes"},
     "inspire": {"realzillionx/inspireskill"},
+    "colab": {"googlecolab/google-colab-cli"},
 }
 
 
 def load_manifest(path=MANIFEST):
     manifest = json.loads(path.read_text())
     if set(manifest) != set(SOURCES):
-        raise ValueError("The manifest must contain lark, hf, hyperframes and inspire.")
+        raise ValueError("The manifest must contain lark, hf, hyperframes, inspire and colab.")
     for runtime, names in manifest.items():
         if not isinstance(names, list) or not names:
             raise ValueError(f"{runtime}: expected a nonempty list of skill names")
@@ -50,13 +51,18 @@ def inventory():
     return json.loads(run("npx", "--yes", "skills", "list", "--global", "--json", capture=True))
 
 
-def owned_skills(runtime, entries):
+def owned_skills(runtime, entries, selected=()):
+    selected = set(selected)
     return {
         entry["name"] for entry in entries
         if entry.get("status") != "missing"
         and (
             str(entry.get("source") or "").lower() in SOURCES[runtime]
             or (runtime == "hf" and entry.get("path") and (Path(entry["path"]) / ".hf-skill-manifest.json").is_file())
+            # colab only displays its bundled skill (`colab skill`); the updater
+            # materializes it in the universal store, so the skills CLI has no
+            # installation record to attribute.
+            or (runtime == "colab" and entry["name"] in selected)
         )
     }
 
@@ -78,7 +84,7 @@ def validate_installed(names, destination):
 def reconcile(runtime, selected, home, *, workdir):
     destination = home / ".agents/skills"
     entries = inventory()
-    owned = owned_skills(runtime, entries)
+    owned = owned_skills(runtime, entries, selected)
     missing = set(selected) - owned
     if missing:
         raise RuntimeError(f"{runtime}: upstream did not install selected skills: {', '.join(sorted(missing))}")
@@ -113,7 +119,7 @@ def reconcile(runtime, selected, home, *, workdir):
 
 
 def check(runtime, selected, home):
-    actual = owned_skills(runtime, inventory())
+    actual = owned_skills(runtime, inventory(), selected)
     if actual != set(selected):
         raise RuntimeError(f"{runtime}: installed {sorted(actual)}, expected {sorted(selected)}")
     validate_installed(selected, home / ".agents/skills")
@@ -136,7 +142,7 @@ def purge_untracked(runtime, selected, home):
     """Remove installer-written copies that the skills CLI does not track."""
     entries = inventory()
     stale = sorted({entry["name"] for entry in entries if entry["name"] in selected}
-                   - owned_skills(runtime, entries))
+                   - owned_skills(runtime, entries, selected))
     if stale:
         run("npx", "--yes", "skills", "remove", *stale, "--global", "--yes")
     for name in sorted(selected):
@@ -192,6 +198,17 @@ def install(runtime, selected, home):
             run("uv", "tool", "install", "--upgrade", "--force", "inspire-skill", cwd=temp)
             purge_untracked(runtime, selected, home)
             run("npx", "--yes", "skills", "add", "realzillionx/inspireskill", "--global", "--skill", "inspire", "--yes", cwd=temp)
+        elif runtime == "colab":
+            run("uv", "tool", "install", "--upgrade", "--force", "google-colab-cli", cwd=temp)
+            colab = str(Path(run("uv", "tool", "dir", "--bin", capture=True)) / "colab")
+            text = run(colab, "skill", capture=True, cwd=temp)
+            frontmatter = text.split("---", 2)
+            match = re.search(r"^name:\s*([^\n]+)", frontmatter[1], re.MULTILINE) if len(frontmatter) == 3 else None
+            if not match or match[1].strip() != "colab-operator":
+                raise RuntimeError("colab: `colab skill` did not print the colab-operator skill")
+            target = home / ".agents/skills" / "colab-operator"
+            target.mkdir(parents=True, exist_ok=True)
+            (target / "SKILL.md").write_text(text + "\n")
         else:
             run("npm", "install", "--global", "hyperframes@latest", cwd=temp)
             binary = str(Path(run("npm", "prefix", "--global", capture=True)) / "bin/hyperframes")
