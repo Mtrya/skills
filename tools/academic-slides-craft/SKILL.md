@@ -1,6 +1,6 @@
 ---
 name: academic-slides-craft
-description: Structures, creates, and refines academic and technical presentation slides for live delivery. Use when planning a paper presentation, course report, research talk, or defense, or when reviewing or polishing the argument, diagrams, tables, typography, or layout of a Beamer, Typst, Keynote, PowerPoint, or PDF deck. 适用于学术报告、论文汇报和技术分享的访谈、主线讨论、制作与审校。
+description: Structures, creates, and refines academic and technical presentation slides for live delivery. Use when planning a paper presentation, course report, research talk, or defense; when authoring Beamer, Typst, or LaTeX slide sources exported to PDF; or when reviewing or polishing the argument, diagrams, tables, typography, or layout of any existing deck. Author PowerPoint or Keynote decks with the visual-design skill; reviewing their content stays in scope here. 适用于学术报告、论文汇报和技术分享的访谈、主线讨论、制作与审校；负责 Beamer/Typst/LaTeX 到 PDF 的幻灯片制作。PowerPoint 或 Keynote 的制作走 visual-design，其内容审校仍在本技能范围内。
 ---
 
 # 学术汇报 Slides
@@ -10,9 +10,9 @@ description: Structures, creates, and refines academic and technical presentatio
 ## 从采访到初稿
 
 1. **先弄清用户现在要做什么。** 采访、读论文、讨论主线、制作和评审是不同工作。如果用户要求分阶段，就按这个顺序推进。讨论时给出可以直接评议的开场原话、主线或示意页。收到制作指令且材料已足够，就做一版完整可看的稿子。
-2. **采访先问用户知道的事。** 确认时长、语言、听众基础、课程或会议要求、演示者习惯的文字密度，以及已有模板。遇到「不要有 AI 味」之类的偏好，问一个具体反例。用户还不熟悉论文时，先了解任务和听众，等论文讲清后再谈最值得传达的判断。一个答案会决定下一问时，一次只问一项。
-3. **读论文时沿因果关系推进。** 从任务和可用信息出发，解释前人方法为何形成、困难在哪里、作者改变了什么、这些改变怎样工作。核对图、式、表、单位与实验条件。选一两个真实对照讲深，把论文的结果和自己的解释写清楚。用户想逐点学时，每次只解一个依赖点。终端不能渲染公式时用纯文本说明，正式稿再做数学排版。
-4. **先谈全局，再进入细节。** 给用户看整场的核心问题、各部分要回答的子问题、主要证据，以及证据能支持的结论。开场从论文背景进入，或从现象、假设、实验反差进入，取决于用户的偏好与听众起点。每一部分结束时交代下一问题从哪里来。主线、取舍与证据定到能出初稿时，把页序、逐字稿和局部样式留到看着成品一起改。
+2. **采访先问用户知道的事。** 确认时长、语言、听众基础、课程或会议要求、演示者习惯的文字密度，以及已有模板。遇到「不要有 AI 味」之类的偏好，问一个具体反例。一个答案会决定下一问时，一次只问一项。
+3. **研读材料时沿因果关系推进。** 从任务和可用信息出发，理清现有做法为何形成、困难在哪里、这项工作改变了什么、这些改变怎样起效。核对图、式、表、单位与实验条件。选一两个真实对照讲深，把工作的结果和自己的解释写清楚。用户想逐点学时，每次只解一个依赖点。终端不能渲染公式时用纯文本说明，正式稿再做数学排版。
+4. **先谈全局，再进入细节。** 给用户看整场的核心问题、各部分要回答的子问题、主要证据，以及证据能支持的结论。开场从工作背景进入，或从现象、假设、实验反差进入，取决于用户的偏好与听众起点。每一部分结束时交代下一问题从哪里来。主线、取舍与证据定到能出初稿时，把页序、逐字稿和局部样式留到看着成品一起改。
 5. **用合适的模板做可编辑的初稿。** 有用户指定的模板就使用它，优先保留已定的页面尺寸、品牌和交付格式。需要找机构模板时，核实来源，分清机构官方标识与社区主题。给每页留能提醒讲者、帮助观众跟上的文字，推导细节和口头过渡可进讲者备注。给限时汇报标注估计用时，并让总时长符合约束。
 
 按论证选组织方式。实证研究可以从待验证的主张出发，经由比较设计走到结果与适用范围。系统报告可以先用一个请求走完整条路径，再放大有新意的模块，最终回到性能或失败条件。两者都可以先给全景再展开细节，并在需要听众形成具体预期的地方用一个贯穿案例。
@@ -41,4 +41,4 @@ description: Structures, creates, and refines academic and technical presentatio
 3. **按交付尺寸重新看一遍。** 从头翻导出的文件，检查整体节奏、封面安全留白、实际读图顺序，以及图注、公式和页脚。重点放大核对长表格、数字对齐、单字换行、中英数间距、节点与连线、文献悬挂缩进和机构标识。编译成功与否只回答文件能不能生成，光学对齐和投影可读性从渲染图判断。
 4. **交付可继续工作的材料。** 按任务提供可编辑源码、所需资源和可直接投影的成品，确保两者来自同一次构建。标明需要用户核对的假设或确实存在的限制。用户要做进一步选择时，把完整文案、修改前后页或可运行的文件交给他们判断。
 
-制作或精修 Beamer 时，读 [Beamer 实操](references/beamer.md) 了解模板接入、数学字体、节点与数表排版，以及编译后核对。
+制作或精修 Beamer 时，读 [Beamer 实操](references/beamer.md) 了解导言区字体与颜色、主题接入、页脚出处、图表与数据表的示例代码，以及编译后核对。
