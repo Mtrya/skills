@@ -18,6 +18,7 @@ Personal collection of agent skills for kimi-code and Codex. Skills maintained h
 
 ### `tools/` — general-purpose utilities
 
+- [academic-slides-craft](tools/academic-slides-craft/SKILL.md) — Structure, draft, and refine academic and technical presentation slides for live delivery, from intake interview and storyline to Beamer, Typst, Keynote, PowerPoint, or PDF decks.
 - [affirmative-first-writing](tools/affirmative-first-writing/SKILL.md) — Writing doctrine for any natural language: strip defensive negation, unsolicited rebuttals, "not X but Y" filler, and over-hedging; explain mechanisms directly.
 - [archify](tools/archify/SKILL.md) — Create architecture, workflow, sequence, data-flow, and lifecycle diagrams as standalone HTML with SVG; accepts plain language or Mermaid.
 - [distill-agent-rule](tools/distill-agent-rule/SKILL.md) — Turn one user complaint about agent behavior into a durable, general rule: interrogate the evidence, formulate the class with its temptation, place it in AGENTS.md, a skill, or a gate.
