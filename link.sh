@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Link maintained skills into ~/.agents/skills and the harness user-level
 # AGENTS.md guide into each harness's config path, so agent harnesses
-# (kimi-code, Codex, OpenCode) discover them. Re-run after adding/retiring
-# a skill or changing the managed guide set.
+# (kimi-code, Codex, OpenCode, Antigravity) discover them. Re-run after
+# adding/retiring a skill or changing the managed guide set.
 set -euo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -51,6 +51,7 @@ agent_links=(
   "agents/AGENTS.md|$HOME/.kimi-code/AGENTS.md"
   "agents/AGENTS.md|$HOME/.codex/AGENTS.md"
   "agents/AGENTS.md|$HOME/.config/opencode/AGENTS.md"
+  "agents/AGENTS.md|$HOME/.gemini/AGENTS.md"
 )
 
 for pair in "${agent_links[@]}"; do
