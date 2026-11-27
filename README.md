@@ -33,7 +33,7 @@ Personal collection of agent skills for kimi-code and Codex. Skills maintained h
 
 ## Harness guides
 
-[agents/AGENTS.md](agents/AGENTS.md) is the user-level guide shared by every agent harness on every machine. `./link.sh` links it into each harness's config path (`~/.kimi-code/AGENTS.md`, `~/.codex/AGENTS.md`, `~/.config/opencode/AGENTS.md`), so harnesses read one file and edits go live immediately.
+[agents/AGENTS.md](agents/AGENTS.md) is the user-level guide shared by every agent harness on every machine. `./link.sh` links it into each harness's config path (`~/.kimi-code/AGENTS.md`, `~/.codex/AGENTS.md`, `~/.config/opencode/AGENTS.md`, `~/.gemini/AGENTS.md`), so harnesses read one file and edits go live immediately.
 
 - Adding a harness: append its destination to `agent_links` in [link.sh](link.sh) and run `./link.sh`.
 - Existing file in the way: the linker never touches a file it does not own — move the old file aside, then run `./link.sh`.

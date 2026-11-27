@@ -59,7 +59,7 @@ class LinkTests(unittest.TestCase):
     def test_links_harness_guides_into_home(self):
         guide = self.guide()
         self.run_link()
-        for rel in (".kimi-code/AGENTS.md", ".codex/AGENTS.md", ".config/opencode/AGENTS.md"):
+        for rel in (".kimi-code/AGENTS.md", ".codex/AGENTS.md", ".config/opencode/AGENTS.md", ".gemini/AGENTS.md"):
             dest = self.home / rel
             self.assertTrue(dest.is_symlink(), rel)
             self.assertEqual(dest.resolve(), guide)

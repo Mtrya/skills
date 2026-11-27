@@ -12,7 +12,7 @@ Verify: `git -C ~/.agents/skills-repo log --oneline -1` prints the newest commit
 
 ## 2. Link skills and the harness guide
 
-Run `./link.sh` in the clone. If any of `~/.kimi-code/AGENTS.md`, `~/.codex/AGENTS.md` or `~/.config/opencode/AGENTS.md` already exists as a regular file, show its diff against `agents/AGENTS.md` to the user, move it aside next to itself (`AGENTS.md.bak`), and run `./link.sh` again so the path becomes a symlink into the repo. The linker never touches a file it does not own.
+Run `./link.sh` in the clone. If any of `~/.kimi-code/AGENTS.md`, `~/.codex/AGENTS.md`, `~/.config/opencode/AGENTS.md` or `~/.gemini/AGENTS.md` already exists as a regular file, show its diff against `agents/AGENTS.md` to the user, move it aside next to itself (`AGENTS.md.bak`), and run `./link.sh` again so the path becomes a symlink into the repo. The linker never touches a file it does not own.
 
 Verify: `readlink ~/.kimi-code/AGENTS.md` and `readlink ~/.codex/AGENTS.md` point into `~/.agents/skills-repo`, and `ls ~/.agents/skills` shows the managed skills.
 
